@@ -192,7 +192,7 @@
                     <div id="Area_push"></div>
                     <section class="item Area_push">
                         <div class="container">
-                            <h2 class="tit-type5" title="新版隨身e策略上線，直覺" data-aos="fade-up">新版隨身e策略上線，直覺<br><span class="">選擇凱基，開始累積！從第一筆，累積一輩子</span></h2>
+                            <h2 class="tit-type5" title="新版隨身e策略上線，直覺" data-aos="fade-up">隨身e策略APP，改版重裝上線<br><span class="">選擇凱基，開始累積！從第一筆，累積一輩子</span></h2>
                             <div class="Area_push_list">
                                 <a href="" target="_blank" class="more">
                                     <div class="card" data-aos="fade-up text">
@@ -385,7 +385,25 @@
                         col.appendChild(clone);
                     });
                 });
+            // 計算一張圖的高度
+            setTimeout(function() {
+                const imgHeight = document.querySelector('.col-left img.kv-img').offsetHeight;
+                const style = document.getElementById('marquee-style-desktop') || document.createElement('style');
+                style.id = 'marquee-style-desktop';
+                style.textContent = `
+                @keyframes marquee-up-flex {
+                0%   { transform: translate3d(0, 0, 0); }
+                100% { transform: translate3d(0, -${imgHeight * 2}px, 0); }
+                }
+                @keyframes marquee-down-flex {
+                0%   { transform: translate3d(0, -${imgHeight * 2}px, 0); }
+                100% { transform: translate3d(0, 0, 0); }
+                }
+                `;
+                document.head.appendChild(style);
+            }, 500);
             }
+
             if (window.innerWidth <= 767) {
                 const track = document.querySelector('.banner-container .kv-marquee .marquee-track');
                 const cols = track.querySelectorAll('.marquee-col');
@@ -394,6 +412,15 @@
                     track.appendChild(clone);
                 });
             }
+            //到一個尺寸時重整
+            let lastWidth = window.innerWidth;
+            window.addEventListener('resize', function() {
+                const currentWidth = window.innerWidth;
+                if ((lastWidth <= 767 && currentWidth > 767) || (lastWidth > 767 && currentWidth <= 767)) {
+                    location.reload();
+                }
+                lastWidth = currentWidth;
+            });
         </script>
 
         <script>
